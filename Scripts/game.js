@@ -80,7 +80,7 @@ function init() {
     spotLight.castShadow = true;
     scene.add(spotLight);
     console.log("Added Spot Light to Scene");
-    // add extras
+    // add controls
     gui = new GUI();
     control = new Control(0.02, 0.03);
     addControl(control);
@@ -88,6 +88,12 @@ function init() {
     addStatsObject();
     document.body.appendChild(renderer.domElement);
     gameLoop(); // render the scene	
+    window.addEventListener('resize', onResize, false);
+}
+function onResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 }
 function addControl(controlObject) {
     gui.add(controlObject, 'rotationSpeed', 0, 0.5);
