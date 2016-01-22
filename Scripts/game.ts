@@ -159,84 +159,85 @@ function setupCamera():void {
 
 function AddHumanCubes() {
     var shoulderGeo = new BoxGeometry(3,3,3);
+    var eyeShape = new SphereGeometry(0.4,20,20);
     cubeGeometry = new BoxGeometry(4, 4, 4);
     var rectGeo = new BoxGeometry(12, 4, 4);
     var bigRectGeo = new BoxGeometry(12,12,4);
     sphereGeometry = new SphereGeometry(3,20,20);
     var cylinderShape = new THREE.CylinderGeometry(1.5,1.5,6,20,20,false);
+    var legShape = new THREE.CylinderGeometry(2,2,8,20,20,false);
 	cubeMaterial = new LambertMaterial({color:0xff0000});
     var skinMaterial = new LambertMaterial({color:0xe4b98e});
+    var eyeColour = new LambertMaterial({color:0xadd8e6});
     
-    //left leg bottom
-	cube1 = new Mesh(cubeGeometry, cubeMaterial);    
-	cube1.castShadow = true;    
-    cube1.position.x = -4;
-    cube1.position.y = 3;
-    cube1.position.z = 0;    
+    // legs here
+    var leg1 = new Mesh(legShape, skinMaterial);
+    leg1.castShadow = true;
+    leg1.position.x = -4;
+    leg1.position.y = 7;
+    leg1.position.z = 0;
     
-    //left leg middle
-    cube2 = new Mesh(cubeGeometry, cubeMaterial);    
-	cube2.castShadow = true;    
-    cube2.position.x = -4;
-    cube2.position.y = 7;
-    cube2.position.z = 0;    
-    
-    //right leg bottom
-    cube4 = new Mesh(cubeGeometry, cubeMaterial);    
-	cube4.castShadow = true;    
-    cube4.position.x = 4;
-    cube4.position.y = 3;
-    cube4.position.z = 0;    
-    
-    //right leg middle
-    cube5 = new Mesh(cubeGeometry, cubeMaterial);    
-	cube5.castShadow = true;    
-    cube5.position.x = 4;
-    cube5.position.y = 7;
-    cube5.position.z = 0;
-    
+    var leg2 = new Mesh(legShape, skinMaterial);
+    leg2.castShadow = true;
+    leg2.position.x = 4;
+    leg2.position.y = 7;
+    leg2.position.z = 0;
+
     //main body rectangle   
     cube3 = new Mesh(bigRectGeo, cubeMaterial);    
 	cube3.castShadow = true;    
     cube3.position.x = 0;
-    cube3.position.y = 15;
+    cube3.position.y = 16;
     cube3.position.z = 0;    
     
-    //left arm
+    //left shoulder
     cube8 = new Mesh(cubeGeometry, cubeMaterial);    
 	cube8.castShadow = true;    
     cube8.position.x = -8;
-    cube8.position.y = 19;
+    cube8.position.y = 20;
     cube8.position.z = 0;    
     
-    //right arm
+    //right shoulder
     cube9 = new Mesh(cubeGeometry, cubeMaterial);    
 	cube9.castShadow = true;    
     cube9.position.x = 8;
-    cube9.position.y = 19;
+    cube9.position.y = 20;
     cube9.position.z = 0; 
-    
-    //head
-    var sphere2 = new Mesh(sphereGeometry, skinMaterial);
-    sphere2.castShadow = true;
-    
-    sphere2.position.x = 0;
-    sphere2.position.y = 23;
-    sphere2.position.z = 0;
-    
+        
     //arms here
     var cyl1 = new Mesh(cylinderShape,skinMaterial);
     cyl1.castShadow = true;
     cyl1.position.x = 8.5;
-    cyl1.position.y = 15;
+    cyl1.position.y = 16;
     cyl1.position.z = 0; 
     
     var cyl2 = new Mesh(cylinderShape,skinMaterial);
     cyl2.castShadow = true;
     cyl2.position.x = -8.5;
-    cyl2.position.y = 15;
-    cyl2.position.z = 0; 
+    cyl2.position.y = 16;
+    cyl2.position.z = 0;
     
+    //head
+    var sphere2 = new Mesh(sphereGeometry, skinMaterial);
+    sphere2.castShadow = true;
+    sphere2.position.x = 0;
+    sphere2.position.y = 24;
+    sphere2.position.z = 0;
+    
+    //eyes here
+    var eye1 = new Mesh(eyeShape, eyeColour);
+    eye1.castShadow = true;
+    eye1.position.x = -1;
+    eye1.position.y = 25;
+    eye1.position.z = 2.5;
+    
+    var eye2 = new Mesh(eyeShape, eyeColour);
+    eye2.castShadow = true;
+    eye2.position.x = 1;
+    eye2.position.y = 25;
+    eye2.position.z = 2.5; 
+    
+    //add items to one group, add group to the scene
     group = new THREE.Object3D();
     group.add(cube1);
     group.add(cube2);
@@ -248,6 +249,10 @@ function AddHumanCubes() {
     group.add(sphere2);
     group.add(cyl1);
     group.add(cyl2);
+    group.add(leg1);
+    group.add(leg2);
+    group.add(eye1);
+    group.add(eye2);
     scene.add(group);     
     
 	console.log("Added Cubes to scene...");
