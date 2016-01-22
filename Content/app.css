@@ -1,3 +1,9 @@
+/*
+Author:             Jason Gunter
+Last Modified By:   Jason Gunter @ 8PM Jan 21st, 2016
+Description:        Draw a 3D human-ish object and allow the user to rotate it
+Revision History:   https://github.com/jgunter7/COMP392-Assignment-1/commits/master
+*/
 body{
     /* set margin to 0 and overflow to hidden, to use the complete page */
     margin: 0;
