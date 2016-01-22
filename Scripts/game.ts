@@ -83,6 +83,10 @@ function init() {
 	scene.add(spotLight);
 	console.log("Added Spot Light to Scene");
 	
+    // add ambient light to the scene
+    var aLight = new THREE.AmbientLight(0x404040); //white light
+    scene.add(aLight);
+    
     // add controls
 	gui = new GUI();
 	control = new Control(0.02,  false);
@@ -154,10 +158,14 @@ function setupCamera():void {
 }
 
 function AddHumanCubes() {
+    var shoulderGeo = new BoxGeometry(3,3,3);
     cubeGeometry = new BoxGeometry(4, 4, 4);
     var rectGeo = new BoxGeometry(12, 4, 4);
     var bigRectGeo = new BoxGeometry(12,12,4);
+    sphereGeometry = new SphereGeometry(3,20,20);
+    var cylinderShape = new THREE.CylinderGeometry(1.5,1.5,6,20,20,false);
 	cubeMaterial = new LambertMaterial({color:0xff0000});
+    var skinMaterial = new LambertMaterial({color:0xe4b98e});
     
     //left leg bottom
 	cube1 = new Mesh(cubeGeometry, cubeMaterial);    
@@ -209,14 +217,25 @@ function AddHumanCubes() {
     cube9.position.z = 0; 
     
     //head
-    sphereGeometry = new SphereGeometry(3,20,20);
-    sphereMaterial = new LambertMaterial({color:0x7777ff});
-    var sphere2 = new Mesh(sphereGeometry, sphereMaterial);
+    var sphere2 = new Mesh(sphereGeometry, skinMaterial);
     sphere2.castShadow = true;
     
     sphere2.position.x = 0;
     sphere2.position.y = 23;
-    sphere2.position.z = 0; 
+    sphere2.position.z = 0;
+    
+    //arms here
+    var cyl1 = new Mesh(cylinderShape,skinMaterial);
+    cyl1.castShadow = true;
+    cyl1.position.x = 8.5;
+    cyl1.position.y = 15;
+    cyl1.position.z = 0; 
+    
+    var cyl2 = new Mesh(cylinderShape,skinMaterial);
+    cyl2.castShadow = true;
+    cyl2.position.x = -8.5;
+    cyl2.position.y = 15;
+    cyl2.position.z = 0; 
     
     group = new THREE.Object3D();
     group.add(cube1);
@@ -227,6 +246,8 @@ function AddHumanCubes() {
     group.add(cube8);
     group.add(cube9);
     group.add(sphere2);
+    group.add(cyl1);
+    group.add(cyl2);
     scene.add(group);     
     
 	console.log("Added Cubes to scene...");
