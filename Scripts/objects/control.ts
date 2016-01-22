@@ -1,10 +1,10 @@
 module objects {
 	export class Control {
 		rotationSpeed: number;
-		bouncingSpeed: number;
-		constructor(rotationSpeed: number, bouncingSpeed: number) {
+		rotationToggle: boolean;
+		constructor(rotationSpeed: number, rotationToggle: boolean) {
 			this.rotationSpeed = rotationSpeed;
-			this.bouncingSpeed = bouncingSpeed;
+			this.rotationToggle = rotationToggle;
 		}
 	}
 }

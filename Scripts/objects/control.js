@@ -1,9 +1,9 @@
 var objects;
 (function (objects) {
     var Control = (function () {
-        function Control(rotationSpeed, bouncingSpeed) {
+        function Control(rotationSpeed, rotationToggle) {
             this.rotationSpeed = rotationSpeed;
-            this.bouncingSpeed = bouncingSpeed;
+            this.rotationToggle = rotationToggle;
         }
         return Control;
     })();

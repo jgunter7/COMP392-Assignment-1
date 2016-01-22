@@ -28,9 +28,18 @@ var cubeMaterial: LambertMaterial;
 var planeMaterial: LambertMaterial;
 var sphereMaterial: LambertMaterial;
 var axes:AxisHelper;
-var cube: Mesh;
+var cube1: Mesh;
+var cube2: Mesh;
+var cube3: Mesh;
+var cube4: Mesh;
+var cube5: Mesh;
+var cube6: Mesh;
+var cube7: Mesh;
+var cube8: Mesh;
+var cube9: Mesh;
 var plane: Mesh;
 var sphere: Mesh;
+var group: THREE.Object3D;
 var spotLight: SpotLight;
 var pointLight: PointLight;
 var control: Control;
@@ -51,7 +60,7 @@ function init() {
     scene.add(axes);
     
     //Add a Plane to the Scene
-	planeGeometry = new PlaneGeometry(60, 20);
+	planeGeometry = new PlaneGeometry(60, 40);
 	planeMaterial = new LambertMaterial({color:0xFFFFFF});
 	plane = new Mesh(planeGeometry, planeMaterial);
 	plane.receiveShadow = true;
@@ -64,31 +73,8 @@ function init() {
 	scene.add(plane);
 	console.log("Added Plane Primitive to scene...");
     
-    //Add a Cube to the Scene
-	cubeGeometry = new BoxGeometry(4, 4, 4);
-	cubeMaterial = new LambertMaterial({color:0xff0000});
-	cube = new Mesh(cubeGeometry, cubeMaterial);    
-	cube.castShadow = true;
-    
-    cube.position.x = -4;
-    cube.position.y = 3;
-    cube.position.z = 0;
-    
-	scene.add(cube);
-	console.log("Added Cube Primitive to scene...");
-	
-    //Add a Sphere to the Scene
-    sphereGeometry = new SphereGeometry(4, 20, 20);
-    sphereMaterial = new LambertMaterial({color:0x7777ff});
-    sphere = new Mesh(sphereGeometry, sphereMaterial);
-    sphere.castShadow = true;
-    
-    sphere.position.x = 20;
-    sphere.position.y = 4;
-    sphere.position.z = 2;
-    
-    scene.add(sphere);
-    console.log("Added Sphere Primitive to scene");
+    //a.k.a Add human figure
+    AddHumanCubes();
     
 	// Add a SpotLight to the scene
 	spotLight = new SpotLight(0xffffff);
@@ -99,7 +85,7 @@ function init() {
 	
     // add controls
 	gui = new GUI();
-	control = new Control(0.02,  0.03);
+	control = new Control(0.02,  false);
 	addControl(control);
     
     // Add framerate stats
@@ -119,8 +105,8 @@ function onResize():void {
 
 
 function addControl(controlObject: Control):void {
+    gui.add(controlObject, 'rotationToggle', false);
 	gui.add(controlObject, 'rotationSpeed', 0, 0.5);
-	gui.add(controlObject, 'bouncingSpeed', 0, 0.5);
 }
 
 function addStatsObject() {
@@ -135,16 +121,11 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop():void {
 	stats.update();
-	
-    //animate cube
-    cube.rotation.x += control.rotationSpeed;
-    cube.rotation.y += control.rotationSpeed;
-    cube.rotation.z += control.rotationSpeed;
-    
-    //bounce the ball
-    step += control.bouncingSpeed;
-    sphere.position.x = 20 + ( 10 * (Math.cos(step)));
-    sphere.position.y = 2  + ( 10 * Math.abs(Math.sin(step)));
+
+    //rotate human
+    if (control.rotationToggle) {
+        RotateHuman(control.rotationSpeed);
+    }
     
 	// render using requestAnimationFrame
 	requestAnimationFrame(gameLoop);
@@ -166,8 +147,91 @@ function setupRenderer():void {
 function setupCamera():void {
 	camera = new PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
 	camera.position.x =-30;
-	camera.position.y = 40;
-	camera.position.z = 30;
+	camera.position.y = 60;
+	camera.position.z = 45;
 	camera.lookAt(scene.position);
 	console.log("Finished setting up Camera...");
+}
+
+function AddHumanCubes() {
+    cubeGeometry = new BoxGeometry(4, 4, 4);
+    var rectGeo = new BoxGeometry(12, 4, 4);
+    var bigRectGeo = new BoxGeometry(12,12,4);
+	cubeMaterial = new LambertMaterial({color:0xff0000});
+    
+    //left leg bottom
+	cube1 = new Mesh(cubeGeometry, cubeMaterial);    
+	cube1.castShadow = true;    
+    cube1.position.x = -4;
+    cube1.position.y = 3;
+    cube1.position.z = 0;    
+    
+    //left leg middle
+    cube2 = new Mesh(cubeGeometry, cubeMaterial);    
+	cube2.castShadow = true;    
+    cube2.position.x = -4;
+    cube2.position.y = 7;
+    cube2.position.z = 0;    
+    
+    //right leg bottom
+    cube4 = new Mesh(cubeGeometry, cubeMaterial);    
+	cube4.castShadow = true;    
+    cube4.position.x = 4;
+    cube4.position.y = 3;
+    cube4.position.z = 0;    
+    
+    //right leg middle
+    cube5 = new Mesh(cubeGeometry, cubeMaterial);    
+	cube5.castShadow = true;    
+    cube5.position.x = 4;
+    cube5.position.y = 7;
+    cube5.position.z = 0;
+    
+    //main body rectangle   
+    cube3 = new Mesh(bigRectGeo, cubeMaterial);    
+	cube3.castShadow = true;    
+    cube3.position.x = 0;
+    cube3.position.y = 15;
+    cube3.position.z = 0;    
+    
+    //left arm
+    cube8 = new Mesh(cubeGeometry, cubeMaterial);    
+	cube8.castShadow = true;    
+    cube8.position.x = -8;
+    cube8.position.y = 19;
+    cube8.position.z = 0;    
+    
+    //right arm
+    cube9 = new Mesh(cubeGeometry, cubeMaterial);    
+	cube9.castShadow = true;    
+    cube9.position.x = 8;
+    cube9.position.y = 19;
+    cube9.position.z = 0; 
+    
+    //head
+    sphereGeometry = new SphereGeometry(3,20,20);
+    sphereMaterial = new LambertMaterial({color:0x7777ff});
+    var sphere2 = new Mesh(sphereGeometry, sphereMaterial);
+    sphere2.castShadow = true;
+    
+    sphere2.position.x = 0;
+    sphere2.position.y = 23;
+    sphere2.position.z = 0; 
+    
+    group = new THREE.Object3D();
+    group.add(cube1);
+    group.add(cube2);
+    group.add(cube3);
+    group.add(cube4);
+    group.add(cube5);
+    group.add(cube8);
+    group.add(cube9);
+    group.add(sphere2);
+    scene.add(group);     
+    
+	console.log("Added Cubes to scene...");
+}
+
+function RotateHuman(rSpeed: number) {
+    group.rotation.y += rSpeed;
 }
