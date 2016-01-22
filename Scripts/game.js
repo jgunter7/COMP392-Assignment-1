@@ -1,4 +1,9 @@
-// MAIN GAME FILE
+/*
+Author:             Jason Gunter
+Last Modified By:   Jason Gunter @ 8PM Jan 21st, 2016
+Description:        Draw a 3D human-ish object and allow the user to rotate it
+Revision History:   https://github.com/jgunter7/COMP392-Assignment-1/commits/master
+*/
 var Scene = THREE.Scene;
 var Renderer = THREE.WebGLRenderer;
 var PerspectiveCamera = THREE.PerspectiveCamera;
@@ -26,13 +31,14 @@ var cubeMaterial;
 var planeMaterial;
 var sphereMaterial;
 var axes;
-var cube1;
-var cube2;
+var eye1;
+var eye2;
+var cyl1;
+var cyl2;
+var head;
+var leg1;
+var leg2;
 var cube3;
-var cube4;
-var cube5;
-var cube6;
-var cube7;
 var cube8;
 var cube9;
 var plane;
@@ -92,6 +98,7 @@ function onResize() {
 function addControl(controlObject) {
     gui.add(controlObject, 'rotationToggle', false);
     gui.add(controlObject, 'rotationSpeed', 0, 0.5);
+    gui.add(controlObject, 'changeColour');
 }
 function addStatsObject() {
     stats = new Stats();
@@ -143,12 +150,12 @@ function AddHumanCubes() {
     var skinMaterial = new LambertMaterial({ color: 0xe4b98e });
     var eyeColour = new LambertMaterial({ color: 0xadd8e6 });
     // legs here
-    var leg1 = new Mesh(legShape, skinMaterial);
+    leg1 = new Mesh(legShape, skinMaterial);
     leg1.castShadow = true;
     leg1.position.x = -4;
     leg1.position.y = 7;
     leg1.position.z = 0;
-    var leg2 = new Mesh(legShape, skinMaterial);
+    leg2 = new Mesh(legShape, skinMaterial);
     leg2.castShadow = true;
     leg2.position.x = 4;
     leg2.position.y = 7;
@@ -172,43 +179,39 @@ function AddHumanCubes() {
     cube9.position.y = 20;
     cube9.position.z = 0;
     //arms here
-    var cyl1 = new Mesh(cylinderShape, skinMaterial);
+    cyl1 = new Mesh(cylinderShape, skinMaterial);
     cyl1.castShadow = true;
     cyl1.position.x = 8.5;
     cyl1.position.y = 16;
     cyl1.position.z = 0;
-    var cyl2 = new Mesh(cylinderShape, skinMaterial);
+    cyl2 = new Mesh(cylinderShape, skinMaterial);
     cyl2.castShadow = true;
     cyl2.position.x = -8.5;
     cyl2.position.y = 16;
     cyl2.position.z = 0;
     //head
-    var sphere2 = new Mesh(sphereGeometry, skinMaterial);
-    sphere2.castShadow = true;
-    sphere2.position.x = 0;
-    sphere2.position.y = 24;
-    sphere2.position.z = 0;
+    head = new Mesh(sphereGeometry, skinMaterial);
+    head.castShadow = true;
+    head.position.x = 0;
+    head.position.y = 24;
+    head.position.z = 0;
     //eyes here
-    var eye1 = new Mesh(eyeShape, eyeColour);
+    eye1 = new Mesh(eyeShape, eyeColour);
     eye1.castShadow = true;
     eye1.position.x = -1;
     eye1.position.y = 25;
     eye1.position.z = 2.5;
-    var eye2 = new Mesh(eyeShape, eyeColour);
+    eye2 = new Mesh(eyeShape, eyeColour);
     eye2.castShadow = true;
     eye2.position.x = 1;
     eye2.position.y = 25;
     eye2.position.z = 2.5;
     //add items to one group, add group to the scene
     group = new THREE.Object3D();
-    group.add(cube1);
-    group.add(cube2);
     group.add(cube3);
-    group.add(cube4);
-    group.add(cube5);
     group.add(cube8);
     group.add(cube9);
-    group.add(sphere2);
+    group.add(head);
     group.add(cyl1);
     group.add(cyl2);
     group.add(leg1);
