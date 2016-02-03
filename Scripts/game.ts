@@ -115,7 +115,9 @@ function onResize():void {
 
 
 function addControl(controlObject: Control):void {
-    gui.add(controlObject, 'rotationToggle', false);
+    gui.add(controlObject, 'rotationToggleX', false);
+    gui.add(controlObject, 'rotationToggleY', false);
+    gui.add(controlObject, 'rotationToggleZ', false);
 	gui.add(controlObject, 'rotationSpeed', 0, 0.5);
     gui.add(controlObject, 'changeColour');
 }
@@ -134,8 +136,14 @@ function gameLoop():void {
 	stats.update();
 
     //rotate human
-    if (control.rotationToggle) {
-        RotateHuman(control.rotationSpeed);
+    if (control.rotationToggleX) {
+        group.rotation.x += control.rotationSpeed;
+    }
+    if (control.rotationToggleY) {
+        group.rotation.y += control.rotationSpeed;
+    }
+    if (control.rotationToggleZ) {
+        group.rotation.z += control.rotationSpeed;
     }
     
 	// render using requestAnimationFrame
@@ -259,8 +267,4 @@ function AddHumanCubes() {
     scene.add(group);     
     
 	console.log("Added Cubes to scene...");
-}
-
-function RotateHuman(rSpeed: number) {
-    group.rotation.y += rSpeed;
 }

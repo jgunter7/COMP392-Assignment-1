@@ -4,7 +4,9 @@ var objects;
         function Control(rotationSpeed, rotationToggle) {
             this.colourChangeMgr = 0;
             this.rotationSpeed = rotationSpeed;
-            this.rotationToggle = rotationToggle;
+            this.rotationToggleX = rotationToggle;
+            this.rotationToggleY = rotationToggle;
+            this.rotationToggleZ = rotationToggle;
         }
         Control.prototype.changeColour = function () {
             group.remove(cube3);

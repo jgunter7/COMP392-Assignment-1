@@ -2,10 +2,14 @@ module objects {
 	export class Control {
         colourChangeMgr = 0;
 		rotationSpeed: number;
-		rotationToggle: boolean;
+		rotationToggleX: boolean;
+        rotationToggleY: boolean;
+        rotationToggleZ: boolean;
 		constructor(rotationSpeed: number, rotationToggle: boolean) {
 			this.rotationSpeed = rotationSpeed;
-			this.rotationToggle = rotationToggle;
+			this.rotationToggleX = rotationToggle;
+            this.rotationToggleY = rotationToggle;
+            this.rotationToggleZ = rotationToggle;
 		}
         public changeColour(): void {
             group.remove(cube3);
