@@ -189,14 +189,18 @@ function AddHumanCubes() {
     //arms here
     cyl1 = new Mesh(cylinderShape, skinMaterial);
     cyl1.castShadow = true;
-    cyl1.position.x = 8.5;
-    cyl1.position.y = 16;
+    cyl1.position.x = 13;
+    cyl1.position.y = 20;
     cyl1.position.z = 0;
+    cyl1.rotation.x += 5;
+    cyl1.rotation.z += 4.7;
     cyl2 = new Mesh(cylinderShape, skinMaterial);
     cyl2.castShadow = true;
-    cyl2.position.x = -8.5;
-    cyl2.position.y = 16;
+    cyl2.position.x = -13;
+    cyl2.position.y = 20;
     cyl2.position.z = 0;
+    cyl2.rotation.x += 5;
+    cyl2.rotation.z += 4.7;
     //head
     head = new Mesh(sphereGeometry, skinMaterial);
     head.castShadow = true;
